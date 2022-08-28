@@ -7,19 +7,48 @@ function formatMarkdown(md, en, wrap_in_p = true) {
 
   let lines = md.split("\n");
   // ---------------------------------------- english
-  let deletingEn = false;
+  let deletingText = false;
   for (let i = 0; i < lines.length; i++) {
     if (en) {
-      // TODO
+      if (
+        !lines[i].includes("<en>") &&
+        lines[i].slice(0, 4) !== "up::" &&
+        lines[i].slice(0, 7) !== "dates::" &&
+        deletingText === false
+      )
+        lines[i] = "";
+      if (lines[i][0] === "#") {
+        lines[i] =
+          lines[i].slice(0, lines[i].indexOf(" ") + 1) +
+          lines[i].slice(
+            lines[i].indexOf("<en>") + 4,
+            lines[i].indexOf("</en>")
+          );
+      }
+      if (deletingText && lines[i].includes("</en>")) {
+        deletingText = false;
+        lines[i] = lines[i].slice(0, lines[i].indexOf("</en>"));
+      }
+      if (lines[i].includes("<en>")) {
+        if (!lines[i].includes("</en>")) {
+          deletingText = true; // it's poorly named, should be false
+          lines[i] = lines[i].slice(lines[i].indexOf("<en>") + 4);
+        } else {
+          lines[i] = lines[i].slice(
+            lines[i].indexOf("<en>") + 4,
+            lines[i].indexOf("</en>")
+          );
+        }
+      }
     } else {
-      if (deletingEn === false) {
+      if (deletingText === false) {
         if (lines[i].includes("<en>")) {
-          deletingEn = lines[i].includes("</en>") ? false : true;
+          deletingText = lines[i].includes("</en>") ? false : true;
           lines[i] = lines[i].slice(0, lines[i].indexOf("<en>"));
         }
       } else {
         if (lines[i].includes("</en>")) {
-          deletingEn = false;
+          deletingText = false;
           lines[i] = lines[i].slice(lines[i].indexOf("</en>") + 5);
         }
       }
@@ -36,7 +65,9 @@ function formatMarkdown(md, en, wrap_in_p = true) {
         if (lines[i][j] !== "#") {
           const HeadingLevel = `h${j}`;
           const headingJsx = (
-            <HeadingLevel>{formatMarkdown(lines[i].slice(j), en)}</HeadingLevel>
+            <HeadingLevel>
+              {formatMarkdown(lines[i].slice(j), false)}
+            </HeadingLevel>
           );
           jsx.push(headingJsx);
           break;

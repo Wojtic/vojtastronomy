@@ -8,23 +8,27 @@ function App() {
   const [ENGLISH, setENGLISH] = useState(false);
 
   return (
-    <Router>
-      <Routes>
-        {filenames.map((page) => {
-          return (
-            <Route
-              path={"/" + page.path}
-              element={<Page name={page.filename} english={ENGLISH} />}
-            />
-          );
-        })}
-        <Route
-          path="/"
-          element={<Page name={"Home (web)"} english={ENGLISH} />}
-        ></Route>
-        <Route path="*" element={<p>404</p>}></Route>
-      </Routes>
-    </Router>
+    <>
+      <input type="checkbox" onClick={() => setENGLISH(!ENGLISH)} />
+      English?
+      <Router>
+        <Routes>
+          {filenames.map((page) => {
+            return (
+              <Route
+                path={"/" + page.path}
+                element={<Page name={page.filename} english={ENGLISH} />}
+              />
+            );
+          })}
+          <Route
+            path="/"
+            element={<Page name={"Home (web)"} english={ENGLISH} />}
+          ></Route>
+          <Route path="*" element={<p>404</p>}></Route>
+        </Routes>
+      </Router>
+    </>
   );
 }
 
