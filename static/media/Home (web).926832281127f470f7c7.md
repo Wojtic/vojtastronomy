@@ -9,3 +9,7 @@ Tohle je domovská stránka astronomického webu.
 ## Důležité odkazy <en>Important links</en>
 - [[Mlok (web)]]
 - [[Optics basics (web)]]
+<en>
+- [[Mlok (web)]]
+- [[Optics basics (web)]]
+</en>
