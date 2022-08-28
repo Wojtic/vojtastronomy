@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Page from "./components/Page";
@@ -10,21 +10,20 @@ const filenames = [
 
 function App() {
   const [ENGLISH, setENGLISH] = useState(false);
-  const [pages, setPages] = useState([]);
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<p>test</p>}></Route>
         {filenames.map((page) => {
           return (
             <Route
-              key={page.path}
               path={"/" + page.path}
               element={<Page name={page.filename} english={ENGLISH} />}
-            ></Route>
+            />
           );
         })}
+        <Route path="/" element={<p>test</p>}></Route>
+        <Route path="*" element={<p>404</p>}></Route>
       </Routes>
     </Router>
   );

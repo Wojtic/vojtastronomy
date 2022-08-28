@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function formatMarkdown(md, en) {
-  const lines = md.split("\n");
   const REMOVE_CHARS_FROM_LINK = 6;
+
+  let lines = md.split("\n");
+  // ---------------------------------------- english
   let deletingEn = false;
   for (let i = 0; i < lines.length; i++) {
-    // ---------------------------------------- english
     if (en) {
       // TODO
     } else {
@@ -23,47 +24,67 @@ function formatMarkdown(md, en) {
         }
       }
     }
-    // ---------------------------------------- links
-    for (let j = 0; j < lines[i].length - 3; j++) {
-      if (lines[i][j] === "[" && lines[i][j + 1] === "[") {
-        let k = j;
-        for (k; k < lines[i].length - 1; k++) {
-          if (lines[i][k] === "]" && lines[i][k + 1] === "]") break;
-        }
-        const link = lines[i].slice(j + 2, k);
-        let linkHtml = `<a href="/`;
-        if (link.includes("|")) {
-          linkHtml += `${link
-            .slice(0, link.indexOf("|") - REMOVE_CHARS_FROM_LINK)
-            .replace(" ", "_")}">${link.slice(link.indexOf("|") + 1)}</a>`;
-        } else {
-          linkHtml += `${link
-            .slice(0, link.length - REMOVE_CHARS_FROM_LINK)
-            .replace(" ", "_")}">${link.slice(
-            0,
-            link.length - REMOVE_CHARS_FROM_LINK
-          )}</a>`;
-        }
-        lines[i] = lines[i].slice(0, j) + linkHtml + lines[i].slice(k + 2);
-      }
-    }
-    // ---------------------------------------- tags
+    // -------------------------------------------------------------- tags
     if (lines[i].slice(0, 6) === "tags::") lines[i] = "";
-    // ---------------------------------------- headings
+  }
+  // -------------------------------------------- headings
+  let jsx = [];
+  for (let i = 0; i < lines.length; i++) {
     if (lines[i][0] === "#") {
       for (let j = 0; j < lines[i].length; j++) {
         if (lines[i][j] !== "#") {
-          lines[i] = `<h${j}>${lines[i].slice(j)}</h${j}>`;
+          const HeadingLevel = `h${j}`;
+          const headingJsx = (
+            <HeadingLevel>{formatMarkdown(lines[i].slice(j), en)}</HeadingLevel>
+          );
+          jsx.push(headingJsx);
           break;
         }
       }
+    } else {
+      if (!lines[i].includes("[[")) jsx.push(lines[i]);
+      else {
+        jsx.push(lines[i].slice(0, lines[i].indexOf("[[")));
+        const link = lines[i].slice(
+          lines[i].indexOf("[[") + 2,
+          lines[i].indexOf("]]")
+        );
+        const linkJsx = (
+          <Link
+            to={
+              "/" +
+              (link.includes("|")
+                ? link
+                    .slice(0, link.indexOf("|") - REMOVE_CHARS_FROM_LINK)
+                    .replace(" ", "_")
+                : link
+                    .slice(0, link.length - REMOVE_CHARS_FROM_LINK)
+                    .replace(" ", "_"))
+            }
+          >
+            {link.includes("|")
+              ? link.slice(link.indexOf("|") + 1)
+              : link.slice(0, link.length - REMOVE_CHARS_FROM_LINK)}
+          </Link>
+        );
+        jsx.push(linkJsx);
+        jsx.push(
+          formatMarkdown(lines[i].slice(lines[i].indexOf("]]") + 2), false)
+        );
+      }
     }
   }
-  return lines.join("\n<br>");
+  return (
+    <>
+      {jsx.map((line) => (
+        <>{line}</>
+      ))}
+    </>
+  );
 }
 
 function Page(props) {
-  const [md, setMd] = useState();
+  const [md, setMd] = useState([]);
 
   useEffect(() => {
     const soubor = require("./../files/markdown/" + props.name + ".md");
@@ -75,9 +96,9 @@ function Page(props) {
       .then((res) => {
         setMd(formatMarkdown(res, props.english));
       });
-  }, []);
+  }, [props.name, props.english]);
 
-  return <article dangerouslySetInnerHTML={{ __html: md }}></article>;
+  return <article>{md}</article>;
 }
 
 export default Page;
