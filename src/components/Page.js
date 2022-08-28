@@ -50,6 +50,8 @@ function formatMarkdown(md, en, wrap_in_p = true) {
         if (lines[i].includes("</en>")) {
           deletingText = false;
           lines[i] = lines[i].slice(lines[i].indexOf("</en>") + 5);
+        } else {
+          lines[i] = "";
         }
       }
     }
