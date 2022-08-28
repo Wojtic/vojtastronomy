@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function formatMarkdown(md, en) {
+function formatMarkdown(md, en, wrap_in_p = true) {
   const REMOVE_CHARS_FROM_LINK = 6;
 
   let lines = md.split("\n");
@@ -30,6 +30,7 @@ function formatMarkdown(md, en) {
   // -------------------------------------------- headings
   let jsx = [];
   for (let i = 0; i < lines.length; i++) {
+    if (lines[i] === "") continue;
     if (lines[i][0] === "#") {
       for (let j = 0; j < lines[i].length; j++) {
         if (lines[i][j] !== "#") {
@@ -42,9 +43,11 @@ function formatMarkdown(md, en) {
         }
       }
     } else {
-      if (!lines[i].includes("[[")) jsx.push(lines[i]);
+      if (!lines[i].includes("[["))
+        jsx.push(wrap_in_p ? <p>{lines[i]}</p> : <>{lines[i]}</>);
       else {
-        jsx.push(lines[i].slice(0, lines[i].indexOf("[[")));
+        let textLine = [];
+        textLine.push(lines[i].slice(0, lines[i].indexOf("[[")));
         const link = lines[i].slice(
           lines[i].indexOf("[[") + 2,
           lines[i].indexOf("]]")
@@ -67,9 +70,28 @@ function formatMarkdown(md, en) {
               : link.slice(0, link.length - REMOVE_CHARS_FROM_LINK)}
           </Link>
         );
-        jsx.push(linkJsx);
+        textLine.push(linkJsx);
+        textLine.push(
+          formatMarkdown(
+            lines[i].slice(lines[i].indexOf("]]") + 2),
+            false,
+            false
+          )
+        );
         jsx.push(
-          formatMarkdown(lines[i].slice(lines[i].indexOf("]]") + 2), false)
+          wrap_in_p ? (
+            <p>
+              {textLine.map((x) => (
+                <>{x}</>
+              ))}
+            </p>
+          ) : (
+            <>
+              {textLine.map((x) => (
+                <>{x}</>
+              ))}
+            </>
+          )
         );
       }
     }

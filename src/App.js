@@ -22,7 +22,10 @@ function App() {
             />
           );
         })}
-        <Route path="/" element={<p>test</p>}></Route>
+        <Route
+          path="/"
+          element={<Page name={"Home (web)"} english={ENGLISH} />}
+        ></Route>
         <Route path="*" element={<p>404</p>}></Route>
       </Routes>
     </Router>
