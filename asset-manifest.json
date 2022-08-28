@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.31d6cfe0.css",
+    "main.js": "/static/js/main.2d040164.js",
+    "index.html": "/index.html",
+    "static/media/Mlok (web).md": "/static/media/Mlok (web).e6a2770a017a571ffb53.md",
+    "static/media/Home (web).md": "/static/media/Home (web).3a888fe797875f4b9eab.md",
+    "main.2d040164.js.map": "/static/js/main.2d040164.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.31d6cfe0.css",
+    "static/js/main.2d040164.js"
+  ]
+}
