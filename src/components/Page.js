@@ -24,10 +24,10 @@ function formatMarkdown(md, en, wrap_in_p = true) {
         }
       }
     }
-    // -------------------------------------------------------------- tags
+    // ------------------------------------------------------------------ tags
     if (lines[i].slice(0, 6) === "tags::") lines[i] = "";
   }
-  // -------------------------------------------- headings
+  // ------------------------------------------------------------------- headings
   let jsx = [];
   for (let i = 0; i < lines.length; i++) {
     if (lines[i] === "") continue;
@@ -43,7 +43,9 @@ function formatMarkdown(md, en, wrap_in_p = true) {
         }
       }
     } else {
+      // ------------------------------------------------------------------ links
       if (!lines[i].includes("[["))
+        // Line doesn't include any link
         jsx.push(wrap_in_p ? <p>{lines[i]}</p> : <>{lines[i]}</>);
       else {
         let textLine = [];
@@ -52,25 +54,23 @@ function formatMarkdown(md, en, wrap_in_p = true) {
           lines[i].indexOf("[[") + 2,
           lines[i].indexOf("]]")
         );
-        const linkJsx = (
-          <Link
-            to={
-              "/" +
-              (link.includes("|")
-                ? link
-                    .slice(0, link.indexOf("|") - REMOVE_CHARS_FROM_LINK)
-                    .replace(" ", "_")
-                : link
-                    .slice(0, link.length - REMOVE_CHARS_FROM_LINK)
-                    .replace(" ", "_"))
-            }
-          >
+        const linkTo =
+          "/" +
+          (link.includes("|")
+            ? link
+                .slice(0, link.indexOf("|") - REMOVE_CHARS_FROM_LINK)
+                .replace(" ", "_")
+            : link
+                .slice(0, link.length - REMOVE_CHARS_FROM_LINK)
+                .replace(" ", "_"));
+
+        textLine.push(
+          <Link to={linkTo}>
             {link.includes("|")
               ? link.slice(link.indexOf("|") + 1)
               : link.slice(0, link.length - REMOVE_CHARS_FROM_LINK)}
           </Link>
         );
-        textLine.push(linkJsx);
         textLine.push(
           formatMarkdown(
             lines[i].slice(lines[i].indexOf("]]") + 2),
