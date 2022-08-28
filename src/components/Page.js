@@ -60,6 +60,7 @@ function formatMarkdown(md, en, wrap_in_p = true) {
   }
   // ------------------------------------------------------------------- headings
   let jsx = [];
+  let date = "";
   for (let i = 0; i < lines.length; i++) {
     if (lines[i] === "") continue;
     if (lines[i][0] === "#") {
@@ -72,9 +73,27 @@ function formatMarkdown(md, en, wrap_in_p = true) {
             </HeadingLevel>
           );
           jsx.push(headingJsx);
+          if (j === 1) {
+            jsx.push(
+              <p>
+                {en ? "Poslední úprava:" : "Last edit:"}
+                {date}
+              </p>
+            );
+          }
           break;
         }
       }
+    } else if (lines[i].slice(0, 4) === "up::") {
+      // ------------------------------------------------------------------- parent page
+      const link = formatMarkdown(lines[i].slice(4), false, false);
+      jsx.push(
+        en ? <p>Parent page:{link}</p> : <p>Nadřazená stránka: {link}</p>
+      );
+    } else if (lines[i].slice(0, 7) === "dates::") {
+      // ------------------------------------------------------------------- date
+      date = lines[i].slice(7);
+      lines[i] = "";
     } else {
       // ------------------------------------------------------------------ links
       if (!lines[i].includes("[["))
