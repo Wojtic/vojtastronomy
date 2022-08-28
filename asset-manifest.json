@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/vojtastronomy/static/css/main.31d6cfe0.css",
-    "main.js": "/vojtastronomy/static/js/main.c6289ca0.js",
+    "main.js": "/vojtastronomy/static/js/main.e96846be.js",
+    "static/media/About (web).md": "/vojtastronomy/static/media/About (web).21038d0ef92c234770fa.md",
     "index.html": "/vojtastronomy/index.html",
     "static/media/About me (web).md": "/vojtastronomy/static/media/About me (web).fba06723a7c8022fe5ea.md",
-    "static/media/Mlok (web).md": "/vojtastronomy/static/media/Mlok (web).8c33f17fe65da13d8813.md",
+    "static/media/Mlok (web).md": "/vojtastronomy/static/media/Mlok (web).83472a93ba9f125d8d92.md",
     "static/media/Home (web).md": "/vojtastronomy/static/media/Home (web).5d6d4e1c9f0c6c864a9b.md",
     "static/media/Optics basics (web).md": "/vojtastronomy/static/media/Optics basics (web).4ee11803fb481232d09d.md",
-    "static/media/About (web).md": "/vojtastronomy/static/media/About (web).abed43c8083247336a09.md",
-    "main.c6289ca0.js.map": "/vojtastronomy/static/js/main.c6289ca0.js.map"
+    "main.e96846be.js.map": "/vojtastronomy/static/js/main.e96846be.js.map"
   },
   "entrypoints": [
     "static/css/main.31d6cfe0.css",
-    "static/js/main.c6289ca0.js"
+    "static/js/main.e96846be.js"
   ]
 }
