@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/vojtastronomy/static/css/main.31d6cfe0.css",
-    "main.js": "/vojtastronomy/static/js/main.fd41195a.js",
+    "main.js": "/vojtastronomy/static/js/main.51d9144f.js",
     "index.html": "/vojtastronomy/index.html",
     "static/media/Mlok (web).md": "/vojtastronomy/static/media/Mlok (web).8c33f17fe65da13d8813.md",
     "static/media/Home (web).md": "/vojtastronomy/static/media/Home (web).926832281127f470f7c7.md",
     "static/media/Optics basics (web).md": "/vojtastronomy/static/media/Optics basics (web).4ee11803fb481232d09d.md",
-    "main.fd41195a.js.map": "/vojtastronomy/static/js/main.fd41195a.js.map"
+    "main.51d9144f.js.map": "/vojtastronomy/static/js/main.51d9144f.js.map"
   },
   "entrypoints": [
     "static/css/main.31d6cfe0.css",
-    "static/js/main.fd41195a.js"
+    "static/js/main.51d9144f.js"
   ]
 }
