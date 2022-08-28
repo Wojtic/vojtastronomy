@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
+import Page from "./components/Page";
+
+const filenames = [
+  { path: "Home", filename: "Home (web)" },
+  { path: "Mlok", filename: "Mlok (web)" },
+];
 
 function App() {
+  const [ENGLISH, setENGLISH] = useState(false);
+  const [pages, setPages] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<p>test</p>}></Route>
+        {filenames.map((page) => {
+          return (
+            <Route
+              key={page.path}
+              path={"/" + page.path}
+              element={<Page name={page.filename} english={ENGLISH} />}
+            ></Route>
+          );
+        })}
+      </Routes>
+    </Router>
   );
 }
 
