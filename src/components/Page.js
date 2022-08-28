@@ -69,14 +69,14 @@ function formatMarkdown(md, en, wrap_in_p = true) {
           const HeadingLevel = `h${j}`;
           const headingJsx = (
             <HeadingLevel>
-              {formatMarkdown(lines[i].slice(j), false)}
+              {formatMarkdown(lines[i].slice(j), false, false)}
             </HeadingLevel>
           );
           jsx.push(headingJsx);
           if (j === 1) {
             jsx.push(
               <p>
-                {en ? "Poslední úprava:" : "Last edit:"}
+                {en ? "Last edit:" : "Poslední úprava:"}
                 {date}
               </p>
             );

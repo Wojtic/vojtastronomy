@@ -2,7 +2,7 @@ up:: [[Home (web)]]
 tags:: #projekt/web 
 dates:: 2022-08-27
 
-# Mlok (web) <en>Mlok</en>
+# Mlok <en>Mlok</en>
 ## Jméno <en>Name</en>
 Proč se jmenuje Mlok?
 Protože je to [[Newtonian telescope (web)|Newtonovský]] design a newt je anglicky mlok.
